@@ -1,0 +1,19 @@
+name: iabtcf_consent_info_platform_interface
+version: 1.0.0
+repository: https://github.com/blaugold/iabtcf_consent_info
+issue_tracker: https://github.com/blaugold/iabtcf_consent_info/issues
+
+environment:
+  sdk: '>=2.8.0 <3.0.0'
+  flutter: ">=1.10.0 <2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  meta: ^1.2.4
+  plugin_platform_interface: ^1.0.3
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  pedantic: ^1.9.2
