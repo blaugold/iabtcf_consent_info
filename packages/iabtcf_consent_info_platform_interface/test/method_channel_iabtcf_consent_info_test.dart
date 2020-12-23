@@ -3,7 +3,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:iabtcf_consent_info_platform_interface/iabtcf_consent_info_platform_interface.dart';
 import 'package:pedantic/pedantic.dart';
 
-const channelName = 'blaugold.github.io/iabtcf_consent_info';
+const channelName = 'com.terwesten.gabriel/iabtcf_consent_info';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +18,7 @@ void main() {
     });
 
     final firstEvent =
-        IabtcfConsentInfoPlatform.instance.startSendingUpdates().first;
+        IabtcfConsentInfoPlatform.instance.rawConsentInfo().first;
 
     expect(channelHasStartedListening, isTrue);
 
