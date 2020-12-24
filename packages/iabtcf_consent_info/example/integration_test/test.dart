@@ -14,9 +14,9 @@ final testConsentInfo = ConsentInfo(
   publisherLegitimateInterests: testDataUsagePurposes,
 );
 
-void main() => run(_testMain);
+void main() {
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-void _testMain() {
   testWidgets('read current consent info', (WidgetTester _) async {
     final info = await IabtcfConsentInfo.instance.currentConsentInfo();
 
