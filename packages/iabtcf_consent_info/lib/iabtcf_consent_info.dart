@@ -65,6 +65,7 @@ enum DataUsagePurpose {
   applyMarketResearchToGenerateAudienceInsights,
 
   /// Develop and improve products
+  ///
   /// See:
   /// - [Policy](https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/#Purpose_10__Develop_and_improve_products)
   developAndImproveProducts,
