@@ -168,10 +168,10 @@ class ConsentInfo {
 
   @override
   String toString() => 'ConsentInfo('
-      'sdkId: $sdkId '
-      'sdkVersion: $sdkVersion '
-      'policyVersion: $policyVersion '
-      'gdprApplies: $gdprApplies '
+      'sdkId: $sdkId, '
+      'sdkVersion: $sdkVersion, '
+      'policyVersion: $policyVersion, '
+      'gdprApplies: $gdprApplies, '
       'publisherConsent: $publisherConsent, '
       'publisherLegitimateInterests: $publisherLegitimateInterests)';
 }
