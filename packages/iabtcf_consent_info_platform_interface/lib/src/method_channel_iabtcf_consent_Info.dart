@@ -6,10 +6,12 @@ const _channel = EventChannel('com.terwesten.gabriel/iabtcf_consent_info');
 
 /// Method channel implementation of [IabtcfConsentInfoPlatform].
 class MethodChannelIabtcfConsentInfo extends IabtcfConsentInfoPlatform {
-  @override
-  Stream<Map<String, dynamic>> rawConsentInfo() {
+  late final _stream = () {
     return _channel
         .receiveBroadcastStream()
         .map((info) => (info as Map).cast<String, dynamic>());
-  }
+  }();
+
+  @override
+  Stream<Map<String, dynamic>> rawConsentInfo() => _stream;
 }

@@ -26,5 +26,8 @@ abstract class IabtcfConsentInfoPlatform extends PlatformInterface {
   /// Stream which emits the raw IABTCF consent information (every key
   /// starts with `IABTCF_`), every time it changes. The platform implementation
   /// must send one initial updated, when the stream is being listened to.
+  ///
+  /// Implementations must always return the same stream and clients must ensure
+  /// that there is at most one subscription of the stream at any point.
   Stream<Map<String, dynamic>> rawConsentInfo();
 }
