@@ -1,6 +1,7 @@
 # [1.1.0] - 2020-12-29
 
-- fix: add missing separators in `ConsentInfo.toString`
+- **feat**: endorse web implementation
+- **fix**: add missing separators in `ConsentInfo.toString`
 
 # [1.0.0] - 2020-12-24
 
