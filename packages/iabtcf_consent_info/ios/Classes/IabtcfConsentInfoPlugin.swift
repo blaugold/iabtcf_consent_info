@@ -1,11 +1,22 @@
-import Flutter
+#if os(iOS)
+    import Flutter
+#elseif os(macOS)
+    import FlutterMacOS
+#endif
+
 import Foundation
 
 public class IabtcfConsentInfoPlugin: NSObject, FlutterPlugin, FlutterStreamHandler {
     public static func register(with registrar: FlutterPluginRegistrar) {
+        #if os(iOS)
+        let messenger = registrar.messenger()
+        #elseif os(macOS)
+        let messenger = registrar.messenger
+        #endif
+        
         let channel = FlutterEventChannel(
             name: "com.terwesten.gabriel/iabtcf_consent_info",
-            binaryMessenger: registrar.messenger()
+            binaryMessenger: messenger
         )
         
         let instance = IabtcfConsentInfoPlugin()

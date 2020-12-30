@@ -26,6 +26,8 @@ flutter:
     platforms:
       ios:
         pluginClass: IabtcfConsentInfoPlugin
+      macos:
+        pluginClass: IabtcfConsentInfoPlugin
       android:
         package: com.terwesten.gabriel.iabtcf_consent_info
         pluginClass: IabtcfConsentInfoPlugin
