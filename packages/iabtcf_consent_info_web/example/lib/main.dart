@@ -24,7 +24,7 @@ class IabtcfConsentInfoViewer extends StatefulWidget {
 }
 
 class _IabtcfConsentInfoViewerState extends State<IabtcfConsentInfoViewer> {
-  Stream<ConsentInfo> consentInfoStream;
+  late Stream<ConsentInfo?> consentInfoStream;
 
   @override
   void initState() {
@@ -38,7 +38,7 @@ class _IabtcfConsentInfoViewerState extends State<IabtcfConsentInfoViewer> {
       appBar: AppBar(
         title: Text('IABTCF Consent Info Example'),
       ),
-      body: StreamBuilder<ConsentInfo>(
+      body: StreamBuilder<ConsentInfo?>(
         stream: consentInfoStream,
         builder: (context, snapshot) => Center(
           child: Padding(

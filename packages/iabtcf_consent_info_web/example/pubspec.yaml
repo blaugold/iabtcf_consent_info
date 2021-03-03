@@ -1,23 +1,24 @@
 name: iabtcf_consent_info_web_example
 description: Demonstrates how to use the iabtcf_consent_info_web plugin.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
-  cupertino_icons: ^1.0.1
-  iabtcf_consent_info:
-    path: ../../iabtcf_consent_info
+  cupertino_icons: ^1.0.2
+  iabtcf_consent_info: any
   iabtcf_consent_info_web:
     path: ../
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  integration_test: ^1.0.1
+  integration_test:
+    sdk: flutter
+  pedantic: ^1.11.0
 
 flutter:
   uses-material-design: true
