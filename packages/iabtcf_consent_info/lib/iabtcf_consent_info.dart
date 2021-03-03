@@ -183,17 +183,13 @@ class IabtcfConsentInfo {
   IabtcfConsentInfo._();
 
   /// The singleton instance of this plugin.
-  static late final instance = () {
-    return IabtcfConsentInfo._();
-  }();
+  static late final instance = IabtcfConsentInfo._();
 
-  late final Subject<ConsentInfo?> _publishedStream = () {
-    return ReplaySubject<ConsentInfo?>(
-      maxSize: 1,
-      onListen: _onPublishedStreamListen,
-      onCancel: _onPublishedStreamCancel,
-    );
-  }();
+  late final _publishedStream = ReplaySubject<ConsentInfo?>(
+    maxSize: 1,
+    onListen: _onPublishedStreamListen,
+    onCancel: _onPublishedStreamCancel,
+  );
 
   late StreamSubscription<void> _rawInfoSub;
 
