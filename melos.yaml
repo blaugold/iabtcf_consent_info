@@ -1,0 +1,19 @@
+name: iabtcf_consent_info
+
+dev_dependencies:
+  pedantic: 1.11.0
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+  flutter: '>=1.10.0'
+
+packages:
+  - packages/**
+
+scripts:
+
+  tests:
+    run: melos exec -- flutter test --no-pub -r expanded
+    select-package:
+      dir-exists:
+        - 'test'
