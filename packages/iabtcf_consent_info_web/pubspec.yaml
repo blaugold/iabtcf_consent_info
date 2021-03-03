@@ -1,6 +1,6 @@
 name: iabtcf_consent_info_web
 description: Web implementation of the iabtcf_consent_info plugin.
-version: 1.2.0
+version: 1.2.1
 repository: https://github.com/blaugold/iabtcf_consent_info
 issue_tracker: https://github.com/blaugold/iabtcf_consent_info/issues
 
@@ -13,7 +13,7 @@ dependencies:
     sdk: flutter
   flutter_web_plugins:
     sdk: flutter
-  iabtcf_consent_info_platform_interface: ^1.0.4
+  iabtcf_consent_info_platform_interface: ^1.0.5
   js: ^0.6.3
 
 dev_dependencies:

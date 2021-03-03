@@ -1,3 +1,7 @@
+## 1.0.5
+
+ - **FIX**: revert to sdk constraint `>=2.12.0-0 <3.0.0`.
+
 ## 1.0.4
 
  - **FIX**: use `late` without unnecessary wrapper.
