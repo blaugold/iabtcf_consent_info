@@ -5,7 +5,7 @@ import 'package:iabtcf_consent_info_platform_interface/iabtcf_consent_info_platf
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
-/// Data usage purpose as defiend by the IABTCF framework.
+/// Data usage purpose as defined by the IABTCF framework.
 ///
 /// See:
 /// - [Policy](https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/#A_Purposes)
