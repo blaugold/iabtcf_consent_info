@@ -1,3 +1,7 @@
+## 1.0.3
+
+ - **FIX**: use `late` without unnecessary wrapper.
+
 # [1.0.2] - 2021-03-03
 
 - **feat**: bump dependencies
