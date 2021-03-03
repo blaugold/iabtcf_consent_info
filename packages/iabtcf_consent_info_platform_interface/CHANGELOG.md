@@ -1,3 +1,8 @@
+# [1.0.2] - 2021-03-03
+
+- **feat**: bump dependencies
+- **fix**: remove upper bound for flutter sdk
+
 # [1.0.1] - 2020-12-29
 
 - **fix**: clarify semantics of stream returned by `rawConsentInfo`
