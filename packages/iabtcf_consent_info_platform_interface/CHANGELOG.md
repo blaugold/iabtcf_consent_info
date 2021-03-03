@@ -1,3 +1,8 @@
+## 1.0.4
+
+ - **FIX**: use `late` without unnecessary wrapper.
+ - **CHORE**: publish packages.
+
 ## 1.0.3
 
  - **FIX**: use `late` without unnecessary wrapper.

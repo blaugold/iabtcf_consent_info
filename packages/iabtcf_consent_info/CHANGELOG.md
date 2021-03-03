@@ -1,3 +1,10 @@
+## 1.3.0
+
+ - **FIX**: use `late` without unnecessary wrapper.
+ - **FEAT**: bump dependencies.
+ - **DOCS**: fix typo.
+ - **CHORE**: publish packages.
+
 ## 1.2.0
 
  - **FIX**: use `late` without unnecessary wrapper.

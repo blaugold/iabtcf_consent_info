@@ -1,6 +1,6 @@
 name: iabtcf_consent_info_platform_interface
 description: Platform interface for the iabtcf_consent_info plugin.
-version: 1.0.3
+version: 1.0.4
 repository: https://github.com/blaugold/iabtcf_consent_info
 issue_tracker: https://github.com/blaugold/iabtcf_consent_info/issues
 
