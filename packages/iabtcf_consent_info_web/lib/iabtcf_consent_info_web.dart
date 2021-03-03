@@ -23,12 +23,11 @@ class IabtcfConsentInfoWeb {
   }
 
   /// The stream controller, whose stream emits raw consent info.
-  late final rawConsentInfoController = () {
-    return StreamController<Map<String, dynamic>>.broadcast(
-      onListen: _onListen,
-      onCancel: _onCancel,
-    );
-  }();
+  late final rawConsentInfoController =
+      StreamController<Map<String, dynamic>>.broadcast(
+    onListen: _onListen,
+    onCancel: _onCancel,
+  );
 
   num? _listenerId = null;
 
