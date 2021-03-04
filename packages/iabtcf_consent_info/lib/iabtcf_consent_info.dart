@@ -185,16 +185,17 @@ class IabtcfConsentInfo {
   /// The singleton instance of this plugin.
   static late final instance = IabtcfConsentInfo._();
 
-  late final _publishedStream = ReplaySubject<ConsentInfo?>(
+  // ignore: close_sinks
+  late final _consentInfo = ReplaySubject<ConsentInfo?>(
     maxSize: 1,
-    onListen: _onPublishedStreamListen,
-    onCancel: _onPublishedStreamCancel,
+    onListen: _onConsentInfoListen,
+    onCancel: _onConsentInfoCancel,
   );
 
-  late StreamSubscription<void> _rawInfoSub;
+  late StreamSubscription<void> _rawConsentInfoSub;
 
-  void _onPublishedStreamListen() {
-    _rawInfoSub = IabtcfConsentInfoPlatform.instance
+  void _onConsentInfoListen() {
+    _rawConsentInfoSub = IabtcfConsentInfoPlatform.instance
         .rawConsentInfo()
         .map((rawInfo) =>
             // The sdk id should be set as early as possible by the CMP sdk to
@@ -203,12 +204,10 @@ class IabtcfConsentInfo {
             !rawInfo.containsKey(_cmpSdkIDKey)
                 ? null
                 : ConsentInfo.parseRawInfo(rawInfo))
-        .listen(_publishedStream.add);
+        .listen(_consentInfo.add);
   }
 
-  Future<void> _onPublishedStreamCancel() async {
-    await _rawInfoSub.cancel();
-  }
+  Future<void> _onConsentInfoCancel() => _rawConsentInfoSub.cancel();
 
   /// Returns a stream which emits every time [ConsentInfo] changes.
   ///
@@ -216,7 +215,7 @@ class IabtcfConsentInfo {
   ///
   /// The first value emitted by the stream is the current consent information
   /// and does not signal a change.
-  Stream<ConsentInfo?> consentInfo() => _publishedStream;
+  Stream<ConsentInfo?> consentInfo() => _consentInfo;
 
   /// Returns a [Future] which resolves to the current [ConsentInfo].
   ///
