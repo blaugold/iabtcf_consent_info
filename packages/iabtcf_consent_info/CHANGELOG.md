@@ -1,3 +1,7 @@
+## 1.3.2
+
+ - **REFACTOR**: ignore `close_sinks` lint for `ReplaySubject`.
+
 ## 1.3.1
 
  - **FIX**: revert to sdk constraint `>=2.12.0-0 <3.0.0`.
