@@ -49,7 +49,7 @@ class TCData {
 extension TCDataExt on TCData {
   /// Returns this data as represented in mobile apps.
   Map<String, dynamic> toInAppTCDataMap() {
-    return {
+    return <String, dynamic>{
       'IABTCF_CmpSdkID': cmpId,
       'IABTCF_CmpSdkVersion': cmpVersion,
       'IABTCF_PolicyVersion': tcfPolicyVersion,

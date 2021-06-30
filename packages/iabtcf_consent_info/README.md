@@ -1,8 +1,10 @@
+[![pub.dev](https://badgen.net/pub/v/iabtcf_consent_info)](https://pub.dev/packages/iabtcf_consent_info)
+[![LICENSE](https://badgen.net/pub/license/iabtcf_consent_info)](./LICENSE)
+[![CI](https://github.com/blaugold/iabtcf_consent_info/actions/workflows/CI.yaml/badge.svg)](https://github.com/blaugold/iabtcf_consent_info/actions/workflows/CI.yaml)
+
 # iabtcf_consent_info
 
-[![](https://badgen.net/pub/v/iabtcf_consent_info)](https://pub.dev/packages/iabtcf_consent_info)
-
-Flutter plugin for reading IAB TCF v2.0 user consent information, such as made available through CMP SDKs, like Funding 
+Flutter plugin for reading IAB TCF v2.0 user consent information, such as made available through CMP SDKs, like Funding
 Choices's User Messaging Platform (UMP).
 
 Consent Management Platforms (CMPs) such as [Funding Choices](https://fundingchoices.google.com/start/) provide SDKs,
@@ -13,7 +15,7 @@ This information can be read and listened to with the help of this plugin.
 ## Available Information
 
 Currently, only a subset of the information provided by CMP SDKs is available through the plugin, primarily the
-consent information related to data usage purposes of the publisher. Please open a new issue, if you need to access 
+consent information related to data usage purposes of the publisher. Please open a new issue, if you need to access
 further information.
 
 ## Usage
@@ -31,9 +33,9 @@ Listen to changes of the consent information:
 
 ```dart
 IabtcfConsentInfo.instance.consentInfo()
-  // If you only want to react to changes skip the first value, 
+  // If you only want to react to changes skip the first value,
   // since the stream always emits the current info when it is listened to.
-  .skip(1).listen((info) { 
-    // React to changes.  
+  .skip(1).listen((info) {
+    // React to changes.
 });
 ```

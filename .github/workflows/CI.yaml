@@ -1,0 +1,39 @@
+name: CI
+
+env:
+  FLUTTER_VERSION: 2.2.2
+  MELOS_VERSION: 0.4.11+2
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Flutter
+        run: |
+          git clone https://github.com/flutter/flutter.git --depth 1 -b "$FLUTTER_VERSION" _flutter
+          _flutter/bin/flutter doctor
+          echo "$GITHUB_WORKSPACE/_flutter/bin" >> "$GITHUB_PATH"
+          echo "$HOME/.pub-cache/bin" >> "$GITHUB_PATH"
+
+      - name: Install melos
+        run: flutter pub global activate melos $MELOS_VERSION
+
+      - name: Bootstrap packages with melos
+        run: melos bootstrap
+
+      - name: Check formatting
+        run: melos run check_formatting
+
+      - name: Run Dart analyzer
+        run: melos run analyze
+
+      - name: Run tests
+        run: melos run test

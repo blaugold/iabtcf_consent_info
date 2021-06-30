@@ -106,7 +106,7 @@ class ConsentInfo {
   static ConsentInfo? parseRawInfo(Map<String, dynamic> rawInfo) {
     // The sdk id should be set as early as possible by the CMP sdk to
     // signal its existence. The skd id being available does not mean consent
-    // info is available, if the sdk id is the only available property. 
+    // info is available, if the sdk id is the only available property.
     // https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details
     if (!rawInfo.containsKey(_cmpSdkIDKey) || rawInfo.length == 1) {
       return null;

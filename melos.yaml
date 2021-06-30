@@ -11,8 +11,12 @@ packages:
   - packages/**
 
 scripts:
+  check_formatting: melos exec -- flutter format --set-exit-if-changed .
 
-  tests:
+  analyze:
+    run: melos exec -c 1 -- flutter analyze
+
+  test:
     run: melos exec -- flutter test --no-pub -r expanded
     select-package:
       dir-exists:
