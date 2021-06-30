@@ -161,7 +161,7 @@ String _idToBoolMapToBitString(Object map) {
   return bits.join('');
 }
 
-@JS("Object.getOwnPropertyNames")
+@JS('Object.getOwnPropertyNames')
 external List<String> _Object_getOwnPropertyNames(Object object);
 
 extension _ValueExt<T> on T {

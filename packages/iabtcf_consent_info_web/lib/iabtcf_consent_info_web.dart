@@ -29,7 +29,7 @@ class IabtcfConsentInfoWeb {
     onCancel: _onCancel,
   );
 
-  num? _listenerId = null;
+  num? _listenerId;
 
   void _onListen() {
     addEventListener(_listener);
