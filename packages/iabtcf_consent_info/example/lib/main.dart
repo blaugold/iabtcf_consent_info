@@ -47,7 +47,7 @@ class _IabtcfConsentInfoViewerState extends State<IabtcfConsentInfoViewer> {
               snapshot.hasData
                   ? snapshot.data.toString()
                   : snapshot.hasError
-                      ? snapshot.error.toString()
+                      ? 'Error: ${snapshot.error}'
                       : 'Loading...',
             ),
           ),
