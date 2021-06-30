@@ -1,3 +1,9 @@
+## 1.3.3
+
+ - **FIX**: propagate errors and handle loading CMP.
+ - **FIX**: prefix error string in example app.
+ - **CI**: setup.
+
 ## 1.3.2
 
  - **REFACTOR**: ignore `close_sinks` lint for `ReplaySubject`.

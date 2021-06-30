@@ -3,7 +3,7 @@ description: >-
   Flutter plugin for reading IAB TCF v2.0 user consent information, such as 
   made available through CMP SDKs, like Funding Choices's 
   User Messaging Platform (UMP).
-version: 1.3.2
+version: 1.3.3
 repository: https://github.com/blaugold/iabtcf_consent_info
 issue_tracker: https://github.com/blaugold/iabtcf_consent_info/issues
 
@@ -17,7 +17,7 @@ dependencies:
   meta: ^1.3.0
   rxdart: ^0.26.0
   iabtcf_consent_info_platform_interface: ^1.0.5
-  iabtcf_consent_info_web: ^1.2.1
+  iabtcf_consent_info_web: ^1.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

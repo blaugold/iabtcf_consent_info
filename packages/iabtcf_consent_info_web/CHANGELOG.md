@@ -1,3 +1,10 @@
+## 1.2.2
+
+ - **STYLE**: update analysis options.
+ - **FIX**: local dependencies.
+ - **CI**: setup.
+ - **CHORE**: publish packages.
+
 ## 1.2.1
 
  - **FIX**: revert to sdk constraint `>=2.12.0-0 <3.0.0`.
