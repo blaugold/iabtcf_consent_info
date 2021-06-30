@@ -24,11 +24,11 @@ class IabtcfConsentInfoViewer extends StatefulWidget {
 }
 
 class _IabtcfConsentInfoViewerState extends State<IabtcfConsentInfoViewer> {
-  late Stream<BasicConsentInfo?> consentInfoStream;
+  late Stream<BasicConsentInfo?> _consentInfoStream;
 
   @override
   void initState() {
-    consentInfoStream = IabtcfConsentInfo.instance.consentInfo();
+    _consentInfoStream = IabtcfConsentInfo.instance.consentInfo();
     super.initState();
   }
 
@@ -39,7 +39,7 @@ class _IabtcfConsentInfoViewerState extends State<IabtcfConsentInfoViewer> {
         title: Text('IABTCF Consent Info Example'),
       ),
       body: StreamBuilder<BasicConsentInfo?>(
-        stream: consentInfoStream,
+        stream: _consentInfoStream,
         builder: (context, snapshot) => Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),

@@ -18,6 +18,8 @@ dependencies:
   rxdart: ^0.26.0
   iabtcf_consent_info_platform_interface: ^1.0.5
   iabtcf_consent_info_web: ^2.0.0
+  collection: ^1.15.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

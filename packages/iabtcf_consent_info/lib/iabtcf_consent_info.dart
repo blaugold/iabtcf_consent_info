@@ -1,6 +1,8 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:iabtcf_consent_info_platform_interface/iabtcf_consent_info_platform_interface.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -74,7 +76,7 @@ enum DataUsagePurpose {
 /// Minimal IAB TCF consent information which is available when a CMP SDK has
 /// been initialized.
 @immutable
-class BasicConsentInfo {
+class BasicConsentInfo with Diagnosticable {
   /// Creates minimal IAB TCF consent information which is available when a CMP
   /// SDK has been initialized.
   const BasicConsentInfo({
@@ -108,6 +110,7 @@ class BasicConsentInfo {
   /// The raw consent info returned from the CMD SDK.
   ///
   /// [==], [hashCode], and [toString] do not take this value into account.
+  // ignore: diagnostic_describe_all_properties
   final Map<String, dynamic> raw;
 
   @override
@@ -128,12 +131,56 @@ class BasicConsentInfo {
       gdprApplies.hashCode;
 
   @override
-  String toString() => 'BasicConsentInfo('
-      'sdkId: $sdkId, '
-      'sdkVersion: $sdkVersion, '
-      'policyVersion: $policyVersion, '
-      'gdprApplies: $gdprApplies'
-      ')';
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(IntProperty('sdkId', sdkId))
+      ..add(IntProperty('sdkVersion', sdkVersion))
+      ..add(IntProperty('policyVersion', policyVersion))
+      ..add(FlagProperty(
+        'gdprApplies',
+        value: gdprApplies,
+        ifTrue: 'GDPR APPLIES',
+        ifFalse: 'GDPR DOES NOT APPLY',
+      ));
+  }
+}
+
+/// Treatment of Purpose 1.
+enum PurposeOneTreatment {
+  /// There is no special Purpose 1 treatment status.
+  ///
+  /// Purpose 1 was disclosed normally (consent) as expected by TCF Policy.
+  normal,
+
+  /// Purpose 1 not disclosed at all.
+  ///
+  /// CMPs use PublisherCC to indicate the publisher's country of establishment
+  /// to help vendors to determine whether the vendor requires Purpose 1
+  /// consent.
+  special,
+}
+
+/// One of the features of processing personal data for which the user is given
+/// the choice to opt-in.
+enum SpecialFeature {
+  /// Use precise geolocation data.
+  usePreciseGeolocationData,
+
+  /// Actively scan device characteristics for identification.
+  activelyScanDeviceCharacteristics
+}
+
+/// Restriction on the use of a vendor.
+enum VendorRestriction {
+  /// Not Allowed
+  notAllowed,
+
+  /// Require Consent
+  requireConsent,
+
+  /// Require Legitimate Interest
+  requireLegitimateInterest,
 }
 
 /// IAB TCF consent information which is provided by a CMP SDK.
@@ -150,8 +197,21 @@ class ConsentInfo extends BasicConsentInfo {
     required int? sdkVersion,
     required int? policyVersion,
     required bool? gdprApplies,
-    required this.publisherConsent,
+    required this.tcString,
+    required this.isServiceSpecific,
+    required this.useNonStandardStacks,
+    required this.publisherCC,
+    required this.purposeOneTreatment,
+    required this.purposeConsents,
+    required this.purposeLegitimateInterests,
+    required this.vendorConsents,
+    required this.vendorLegitimateInterests,
+    required this.specialFeatureOptions,
+    required this.publisherConsents,
     required this.publisherLegitimateInterests,
+    required this.publisherCustomPurposeConsents,
+    required this.publisherCustomPurposeLegitimateInterests,
+    required this.publisherRestrictions,
   }) : super(
           raw: raw,
           sdkId: sdkId,
@@ -160,13 +220,58 @@ class ConsentInfo extends BasicConsentInfo {
           gdprApplies: gdprApplies,
         );
 
-  /// The [DataUsagePurpose]s for which the publisher has a legal basis of
-  /// consent.
-  final List<DataUsagePurpose> publisherConsent;
+  /// base64url-encoded TC string with segments.
+  final String tcString;
 
-  /// The [DataUsagePurpose]s for which the publisher has a legal basis of
-  /// legitimate interests.
+  /// Whether the TC String is service-specific/publisher-specific.
+  ///
+  /// Returns `false` when using a global TC String.
+  final bool isServiceSpecific;
+
+  /// Whether CMP is using publisher-customized stack descriptions.
+  final bool useNonStandardStacks;
+
+  /// Country code of the country that determines the legislation of reference.
+  ///
+  /// Normally corresponds to the country code of the country in which the
+  /// publisher's business entity is established.
+  final String publisherCC;
+
+  /// Treatment of [DataUsagePurpose.storeAndAccessInformationOnADevice].
+  final PurposeOneTreatment purposeOneTreatment;
+
+  /// Allowed [DataUsagePurpose]s, on the basis of consent.
+  final List<DataUsagePurpose> purposeConsents;
+
+  /// Allowed [DataUsagePurpose]s, on the basis of legitimate interests.
+  final List<DataUsagePurpose> purposeLegitimateInterests;
+
+  /// IDs of allowed vendors, on the basis of consent.
+  final List<int> vendorConsents;
+
+  /// IDs of allowed vendors, on the basis of legitimate interests.
+  final List<int> vendorLegitimateInterests;
+
+  /// [SpecialFeature]s the user has opted in to.
+  final List<SpecialFeature> specialFeatureOptions;
+
+  /// Allowed publisher [DataUsagePurpose]s, on the basis of consent.
+  final List<DataUsagePurpose> publisherConsents;
+
+  /// Allowed publisher [DataUsagePurpose]s, on the basis of legitimate 
+  /// interests.
   final List<DataUsagePurpose> publisherLegitimateInterests;
+
+  /// Allowed custom publisher [DataUsagePurpose]s, on the basis of consent.
+  final List<int> publisherCustomPurposeConsents;
+
+  /// Allowed custom publisher [DataUsagePurpose]s, on the basis of legitimate 
+  /// interests.
+  final List<int> publisherCustomPurposeLegitimateInterests;
+
+  /// Restriction of Purposes per vendors, by the publisher.
+  final Map<DataUsagePurpose, Map<int, VendorRestriction>>
+      publisherRestrictions;
 
   @override
   bool operator ==(Object other) =>
@@ -174,54 +279,115 @@ class ConsentInfo extends BasicConsentInfo {
       other is ConsentInfo &&
           runtimeType == other.runtimeType &&
           super == other &&
-          listEquals(publisherConsent, other.publisherConsent) &&
+          tcString == other.tcString &&
+          isServiceSpecific == other.isServiceSpecific &&
+          useNonStandardStacks == other.useNonStandardStacks &&
+          publisherCC == other.publisherCC &&
+          purposeOneTreatment == other.purposeOneTreatment &&
+          listEquals(purposeConsents, other.purposeConsents) &&
+          listEquals(
+              purposeLegitimateInterests, other.purposeLegitimateInterests) &&
+          listEquals(vendorConsents, other.vendorConsents) &&
+          listEquals(
+              vendorLegitimateInterests, other.vendorLegitimateInterests) &&
+          listEquals(specialFeatureOptions, other.specialFeatureOptions) &&
+          listEquals(publisherConsents, other.publisherConsents) &&
           listEquals(
             publisherLegitimateInterests,
             other.publisherLegitimateInterests,
+          ) &&
+          listEquals(
+            publisherCustomPurposeConsents,
+            other.publisherCustomPurposeConsents,
+          ) &&
+          listEquals(
+            publisherCustomPurposeLegitimateInterests,
+            other.publisherCustomPurposeLegitimateInterests,
+          ) &&
+          const DeepCollectionEquality().equals(
+            publisherRestrictions,
+            other.publisherRestrictions,
           );
 
   @override
   int get hashCode =>
       super.hashCode ^
-      publisherConsent.hashCode ^
-      publisherLegitimateInterests.hashCode;
+      tcString.hashCode ^
+      isServiceSpecific.hashCode ^
+      useNonStandardStacks.hashCode ^
+      publisherCC.hashCode ^
+      purposeOneTreatment.hashCode ^
+      hashList(purposeConsents) ^
+      hashList(purposeLegitimateInterests) ^
+      hashList(vendorConsents) ^
+      hashList(vendorLegitimateInterests) ^
+      hashList(specialFeatureOptions) ^
+      hashList(publisherConsents) ^
+      hashList(publisherLegitimateInterests) ^
+      hashList(publisherCustomPurposeConsents) ^
+      hashList(publisherCustomPurposeLegitimateInterests) ^
+      const DeepCollectionEquality().hash(publisherRestrictions);
 
   @override
-  String toString() => 'ConsentInfo('
-      'sdkId: $sdkId, '
-      'sdkVersion: $sdkVersion, '
-      'policyVersion: $policyVersion, '
-      'gdprApplies: $gdprApplies, '
-      'publisherConsent: $publisherConsent, '
-      'publisherLegitimateInterests: $publisherLegitimateInterests'
-      ')';
-}
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
 
-// Keys in the raw information made available by a CMP SDK.
-const _cmpSdkIDKey = 'IABTCF_CmpSdkID';
-const _cmpSdkVersionKey = 'IABTCF_CmpSdkVersion';
-const _policyVersionKey = 'IABTCF_PolicyVersion';
-const _gdprAppliesKey = 'IABTCF_gdprApplies';
-const _publisherConsentKey = 'IABTCF_PublisherConsent';
-const _publisherLegitimateInterestKey = 'IABTCF_PublisherLegitimateInterests';
+    IterableProperty<String> enumList(String name, Iterable<Object> list) =>
+        IterableProperty(name, list.map((e) => describeEnum(e)));
+
+    properties
+      ..add(StringProperty('tcString', tcString))
+      ..add(DiagnosticsProperty('isServiceSpecific', isServiceSpecific))
+      ..add(DiagnosticsProperty('useNonStandardStacks', useNonStandardStacks))
+      ..add(StringProperty('publisherCC', publisherCC))
+      ..add(EnumProperty('purposeOneTreatment', purposeOneTreatment))
+      ..add(enumList('purposeConsents', purposeConsents))
+      ..add(enumList('purposeLegitimateInterests', purposeLegitimateInterests))
+      ..add(IterableProperty('vendorConsents', vendorConsents))
+      ..add(IterableProperty(
+        'vendorLegitimateInterests',
+        vendorLegitimateInterests,
+      ))
+      ..add(enumList('specialFeatureOptions', specialFeatureOptions))
+      ..add(enumList('publisherConsents', publisherConsents))
+      ..add(enumList(
+        'publisherLegitimateInterests',
+        publisherLegitimateInterests,
+      ))
+      ..add(IterableProperty(
+        'publisherCustomPurposeConsents',
+        publisherCustomPurposeConsents,
+      ))
+      ..add(IterableProperty(
+        'publisherCustomPurposeLegitimateInterests',
+        publisherCustomPurposeLegitimateInterests,
+      ))
+      ..add(DiagnosticsProperty(
+        'publisherRestrictions',
+        publisherRestrictions,
+      ));
+  }
+}
 
 /// Create [BasicConsentInfo] from the raw consent information, which is made
 /// available by an CMP SDK.
 BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
-  final sdkId = raw[_cmpSdkIDKey] as int?;
+  final sdkId = raw['IABTCF_CmpSdkID'] as int?;
 
-  // The sdk id should be set as early as possible by the CMP sdk to
-  // signal its existence.
+  // The sdk id should be set as early as possible by the CMP sdk to signal
+  // its existence.
   // https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details
   if (sdkId == null) {
     return null;
   }
 
-  final sdkVersion = raw[_cmpSdkVersionKey] as int?;
-  final policyVersion = raw[_policyVersionKey] as int?;
-  final gdprApplies = (raw[_gdprAppliesKey] as int?)?.let(_parseNumberAsBool);
+  final sdkVersion = raw['IABTCF_CmpSdkVersion'] as int?;
+  final policyVersion = raw['IABTCF_PolicyVersion'] as int?;
+  final gdprApplies =
+      (raw['IABTCF_gdprApplies'] as int?)?.let(_parseNumberAsBool);
+  final tcString = raw['IABTCF_TCString'] as String?;
 
-  if (gdprApplies != true) {
+  if (tcString == null) {
     return BasicConsentInfo(
       raw: raw,
       sdkId: sdkId,
@@ -231,18 +397,43 @@ BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
     );
   }
 
-  List<DataUsagePurpose> parseDataUsagePurpose(Object? info) =>
-      (info as String?)?.let(_parseDataUsagePurposeBinaryString) ?? [];
-
   return ConsentInfo(
     raw: raw,
     sdkId: sdkId,
     sdkVersion: sdkVersion,
     policyVersion: policyVersion,
     gdprApplies: true,
-    publisherConsent: parseDataUsagePurpose(raw[_publisherConsentKey]),
+    tcString: tcString,
+    isServiceSpecific: true,
+    useNonStandardStacks:
+        (raw['IABTCF_UseNonStandardStacks'] as int).let(_parseNumberAsBool),
+    publisherCC: raw['IABTCF_PublisherCC'] as String,
+    purposeOneTreatment: ((raw['IABTCF_PurposeOneTreatment'] as int?) ?? 0)
+        .let(_parsePurposeOneTreatment),
+    purposeConsents: (raw['IABTCF_PurposeConsents'] as String?)
+        .let(_parseDataUsagePurposeBinaryString),
+    purposeLegitimateInterests:
+        (raw['IABTCF_PurposeLegitimateInterests'] as String?)
+            .let(_parseDataUsagePurposeBinaryString),
+    vendorConsents:
+        (raw['IABTCF_VendorConsents'] as String?).let(_parseIdBinaryString),
+    vendorLegitimateInterests:
+        (raw['IABTCF_VendorLegitimateInterests'] as String?)
+            .let(_parseIdBinaryString),
+    specialFeatureOptions: (raw['IABTCF_SpecialFeaturesOptIns'] as String?)
+        .let(_parseSpecialFeatureBinaryString),
+    publisherConsents: (raw['IABTCF_PublisherConsent'] as String?)
+        .let(_parseDataUsagePurposeBinaryString),
     publisherLegitimateInterests:
-        parseDataUsagePurpose(raw[_publisherLegitimateInterestKey]),
+        (raw['IABTCF_PublisherLegitimateInterests'] as String?)
+            .let(_parseDataUsagePurposeBinaryString),
+    publisherCustomPurposeConsents:
+        (raw['IABTCF_PublisherCustomPurposesConsents'] as String?)
+            .let(_parseIdBinaryString),
+    publisherCustomPurposeLegitimateInterests:
+        (raw['IABTCF_PublisherCustomPurposesLegitimateInterests'] as String?)
+            .let(_parseIdBinaryString),
+    publisherRestrictions: _parsePublisherRestriction(raw),
   );
 }
 
@@ -252,20 +443,57 @@ bool _parseNumberAsBool(int value) {
   return value == 0 ? false : true;
 }
 
+PurposeOneTreatment _parsePurposeOneTreatment(int index) =>
+    PurposeOneTreatment.values[index];
+
 /// Takes a string of only `0`s and `1`s, and returns the 0-based indices of
 /// the `1`s.
-List<int> _parseBinaryString(String string) => string
-    .split('')
-    .asMap()
-    .entries
-    .where((it) => it.value == '1')
-    .map((it) => it.key)
-    .toList();
+Iterable<int> _parseBinaryString(String? string) =>
+    string
+        ?.split('')
+        .asMap()
+        .entries
+        .where((it) => it.value == '1')
+        .map((it) => it.key) ??
+    [];
 
-List<DataUsagePurpose> _parseDataUsagePurposeBinaryString(String string) =>
+Map<DataUsagePurpose, Map<int, VendorRestriction>> _parsePublisherRestriction(
+    Map<String, dynamic> raw) {
+  final result = <DataUsagePurpose, Map<int, VendorRestriction>>{};
+
+  for (final purpose in DataUsagePurpose.values) {
+    final id = DataUsagePurpose.values.indexOf(purpose) + 1;
+    final key = 'IABTCF_PublisherRestrictions$id';
+    final restrictions = raw[key] as String?;
+    if (restrictions != null) {
+      result[purpose] = _parseVendorRestrictionsString(restrictions);
+    }
+  }
+
+  return result;
+}
+
+Map<int, VendorRestriction> _parseVendorRestrictionsString(String string) =>
+    string
+        .split('')
+        .asMap()
+        .entries
+        .map((entry) => MapEntry(
+              entry.key + 1,
+              VendorRestriction.values[int.parse(entry.value)],
+            ))
+        .let((entries) => Map.fromEntries(entries));
+
+List<DataUsagePurpose> _parseDataUsagePurposeBinaryString(String? string) =>
     _parseBinaryString(string)
         .map((it) => DataUsagePurpose.values[it])
         .toList();
+
+List<int> _parseIdBinaryString(String? string) =>
+    _parseBinaryString(string).map((index) => index + 1).toList();
+
+List<SpecialFeature> _parseSpecialFeatureBinaryString(String? string) =>
+    _parseBinaryString(string).map((it) => SpecialFeature.values[it]).toList();
 
 /// Plugin for reading locally stored IAB TCF consent information, provided by a
 /// CMP SDK.

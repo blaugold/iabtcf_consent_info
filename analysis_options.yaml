@@ -9,3 +9,4 @@ linter:
   rules:
     - public_member_api_docs
     - close_sinks
+    - diagnostic_describe_all_properties

@@ -21,7 +21,8 @@ func setupTestConsentInfo() {
         "IABTCF_CmpSdkVersion": 0,
         "IABTCF_PolicyVersion": 2,
         "IABTCF_gdprApplies": 1,
-        "IABTCF_PublisherConsent": "0101010101",
-        "IABTCF_PublisherLegitimateInterests": "0101010101",
+        "IABTCF_UseNonStandardStacks": 0,
+        "IABTCF_PublisherCC": "AA",
+        "IABTCF_TCString": "test"
     ])
 }

@@ -21,3 +21,14 @@ scripts:
     select-package:
       dir-exists:
         - 'test'
+  
+  integration_test:web:
+    run: melos exec -- 
+      flutter drive 
+        --no-pub 
+        -d web-server 
+        --driver test_driver/integration_test.dart 
+        --target integration_test/e2e_test.dart
+    select-package:
+      scope:
+        - iabtcf_consent_info_web_example
