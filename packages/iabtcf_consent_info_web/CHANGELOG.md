@@ -1,3 +1,9 @@
+## 2.0.0
+
+> Note: This release has breaking changes.
+
+ - **BREAKING** **FEAT**: add `BasicConsentInfo` for when full `ConsentInfo` is not avilable.
+
 ## 1.2.2
 
  - **STYLE**: update analysis options.
