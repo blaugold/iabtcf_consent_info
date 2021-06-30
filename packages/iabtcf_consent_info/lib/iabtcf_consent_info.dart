@@ -78,6 +78,7 @@ class BasicConsentInfo {
   /// Creates minimal IAB TCF consent information which is available when a CMP
   /// SDK has been initialized.
   const BasicConsentInfo({
+    required this.raw,
     required this.sdkId,
     required this.sdkVersion,
     required this.policyVersion,
@@ -103,6 +104,11 @@ class BasicConsentInfo {
   /// See:
   /// - [What does the gdprApplies value mean?](https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#what-does-the-gdprapplies-value-mean)
   final bool? gdprApplies;
+
+  /// The raw consent info returned from the CMD SDK.
+  ///
+  /// [==], [hashCode], and [toString] do not take this value into account.
+  final Map<String, dynamic> raw;
 
   @override
   bool operator ==(Object other) =>
@@ -139,6 +145,7 @@ class BasicConsentInfo {
 class ConsentInfo extends BasicConsentInfo {
   /// Create IAB TCF consent information which is provided by a CMP SDK.
   const ConsentInfo({
+    required Map<String, dynamic> raw,
     required int sdkId,
     required int? sdkVersion,
     required int? policyVersion,
@@ -146,6 +153,7 @@ class ConsentInfo extends BasicConsentInfo {
     required this.publisherConsent,
     required this.publisherLegitimateInterests,
   }) : super(
+          raw: raw,
           sdkId: sdkId,
           sdkVersion: sdkVersion,
           policyVersion: policyVersion,
@@ -215,6 +223,7 @@ BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
 
   if (gdprApplies != true) {
     return BasicConsentInfo(
+      raw: raw,
       sdkId: sdkId,
       sdkVersion: sdkVersion,
       policyVersion: policyVersion,
@@ -226,6 +235,7 @@ BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
       (info as String?)?.let(_parseDataUsagePurposeBinaryString) ?? [];
 
   return ConsentInfo(
+    raw: raw,
     sdkId: sdkId,
     sdkVersion: sdkVersion,
     policyVersion: policyVersion,

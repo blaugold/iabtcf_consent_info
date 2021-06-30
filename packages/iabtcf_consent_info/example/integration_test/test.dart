@@ -6,6 +6,7 @@ final testDataUsagePurposes =
     [1, 3, 5, 7, 9].map((i) => DataUsagePurpose.values[i]).toList();
 
 final testConsentInfo = ConsentInfo(
+  raw: <String, dynamic>{},
   sdkId: 0,
   sdkVersion: 0,
   policyVersion: 2,
