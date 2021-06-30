@@ -103,7 +103,15 @@ class ConsentInfo {
 
   /// Create [ConsentInfo] from the raw consent information, which is made
   /// available by an CMP SDK.
-  factory ConsentInfo.parseRawInfo(Map<String, dynamic> rawInfo) {
+  static ConsentInfo? parseRawInfo(Map<String, dynamic> rawInfo) {
+    // The sdk id should be set as early as possible by the CMP sdk to
+    // signal its existence. The skd id being available does not mean consent
+    // info is available, if the sdk id is the only available property. 
+    // https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details
+    if (!rawInfo.containsKey(_cmpSdkIDKey) || rawInfo.length == 1) {
+      return null;
+    }
+
     List<DataUsagePurpose> parseDataUsagePurpose(Object? info) =>
         (info as String?)?.let(_parseDataUsagePurposeBinaryString) ?? [];
 
@@ -197,14 +205,8 @@ class IabtcfConsentInfo {
   void _onConsentInfoListen() {
     _rawConsentInfoSub = IabtcfConsentInfoPlatform.instance
         .rawConsentInfo()
-        .map((rawInfo) =>
-            // The sdk id should be set as early as possible by the CMP sdk to
-            // signal its existence.
-            // https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/TCFv2/IAB%20Tech%20Lab%20-%20CMP%20API%20v2.md#in-app-details
-            !rawInfo.containsKey(_cmpSdkIDKey)
-                ? null
-                : ConsentInfo.parseRawInfo(rawInfo))
-        .listen(_consentInfo.add);
+        .map(ConsentInfo.parseRawInfo)
+        .listen(_consentInfo.add, onError: _consentInfo.addError);
   }
 
   Future<void> _onConsentInfoCancel() => _rawConsentInfoSub.cancel();
