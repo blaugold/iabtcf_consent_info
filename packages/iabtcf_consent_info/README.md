@@ -1,5 +1,4 @@
 [![pub.dev](https://badgen.net/pub/v/iabtcf_consent_info)](https://pub.dev/packages/iabtcf_consent_info)
-[![LICENSE](https://badgen.net/pub/license/iabtcf_consent_info)](./LICENSE)
 [![CI](https://github.com/blaugold/iabtcf_consent_info/actions/workflows/CI.yaml/badge.svg)](https://github.com/blaugold/iabtcf_consent_info/actions/workflows/CI.yaml)
 
 # iabtcf_consent_info
