@@ -139,7 +139,7 @@ String _idToBoolMapToBitString(Object map) {
   // Extract entries from plain JS object.
   final entries = _Object_getOwnPropertyNames(map).map((idString) {
     final key = int.parse(idString);
-    final value = getProperty(map, idString) as bool;
+    final value = getProperty<bool>(map, idString);
     return MapEntry(key, value);
   });
 
