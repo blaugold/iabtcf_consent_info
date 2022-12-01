@@ -23,7 +23,7 @@ Read the current consent information:
 
 ```dart
 final info = await IabtcfConsentInfo.instance.currentConsentInfo();
-if (info.publisherConsent.contains(DataUsagePurpose.developAndImproveProducts)) {
+if (info.publisherConsents.contains(DataUsagePurpose.developAndImproveProducts)) {
   // Do something which required consent.
 }
 ```

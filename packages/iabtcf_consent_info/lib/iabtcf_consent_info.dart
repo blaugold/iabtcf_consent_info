@@ -149,7 +149,7 @@ class ConsentInfo extends BasicConsentInfo {
     required int? sdkVersion,
     required int? policyVersion,
     required bool? gdprApplies,
-    required this.publisherConsent,
+    required this.publisherConsents,
     required this.publisherLegitimateInterests,
   }) : super(
           raw: raw,
@@ -161,7 +161,7 @@ class ConsentInfo extends BasicConsentInfo {
 
   /// The [DataUsagePurpose]s for which the publisher has a legal basis of
   /// consent.
-  final List<DataUsagePurpose> publisherConsent;
+  final List<DataUsagePurpose> publisherConsents;
 
   /// The [DataUsagePurpose]s for which the publisher has a legal basis of
   /// legitimate interests.
@@ -173,7 +173,7 @@ class ConsentInfo extends BasicConsentInfo {
       other is ConsentInfo &&
           runtimeType == other.runtimeType &&
           super == other &&
-          listEquals(publisherConsent, other.publisherConsent) &&
+          listEquals(publisherConsents, other.publisherConsents) &&
           listEquals(
             publisherLegitimateInterests,
             other.publisherLegitimateInterests,
@@ -182,7 +182,7 @@ class ConsentInfo extends BasicConsentInfo {
   @override
   int get hashCode =>
       super.hashCode ^
-      publisherConsent.hashCode ^
+      publisherConsents.hashCode ^
       publisherLegitimateInterests.hashCode;
 
   @override
@@ -191,7 +191,7 @@ class ConsentInfo extends BasicConsentInfo {
       'sdkVersion: $sdkVersion, '
       'policyVersion: $policyVersion, '
       'gdprApplies: $gdprApplies, '
-      'publisherConsent: $publisherConsent, '
+      'publisherConsents: $publisherConsents, '
       'publisherLegitimateInterests: $publisherLegitimateInterests'
       ')';
 }
@@ -239,7 +239,7 @@ BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
     sdkVersion: sdkVersion,
     policyVersion: policyVersion,
     gdprApplies: true,
-    publisherConsent: parseDataUsagePurpose(raw[_publisherConsentKey]),
+    publisherConsents: parseDataUsagePurpose(raw[_publisherConsentKey]),
     publisherLegitimateInterests:
         parseDataUsagePurpose(raw[_publisherLegitimateInterestKey]),
   );
