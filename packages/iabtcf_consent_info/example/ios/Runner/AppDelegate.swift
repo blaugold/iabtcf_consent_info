@@ -7,9 +7,9 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    
+
     setupTestConsentInfo()
-    
+
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
@@ -21,6 +21,8 @@ func setupTestConsentInfo() {
         "IABTCF_CmpSdkVersion": 0,
         "IABTCF_PolicyVersion": 2,
         "IABTCF_gdprApplies": 1,
+        "IABTCF_PurposeConsents": "0101010101",
+        "IABTCF_PurposeLegitimateInterests": "0101010101",
         "IABTCF_PublisherConsent": "0101010101",
         "IABTCF_PublisherLegitimateInterests": "0101010101",
     ])

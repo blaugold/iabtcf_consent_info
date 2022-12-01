@@ -41,6 +41,9 @@ class TCData {
   /// Others: undefined.
   external num? get listenerId;
 
+  /// TC data for the advertising purposes.
+  external PublisherTCData get purpose;
+
   /// TC data for the publisher.
   external PublisherTCData get publisher;
 }
@@ -54,6 +57,9 @@ extension TCDataExt on TCData {
       'IABTCF_CmpSdkVersion': cmpVersion,
       'IABTCF_PolicyVersion': tcfPolicyVersion,
       'IABTCF_gdprApplies': gdprApplies?.let(_boolToInt),
+      'IABTCF_PurposeConsents': _idToBoolMapToBitString(purpose.consents),
+      'IABTCF_PurposeLegitimateInterests':
+          _idToBoolMapToBitString(purpose.legitimateInterests),
       'IABTCF_PublisherConsent': _idToBoolMapToBitString(publisher.consents),
       'IABTCF_PublisherLegitimateInterests':
           _idToBoolMapToBitString(publisher.legitimateInterests),
