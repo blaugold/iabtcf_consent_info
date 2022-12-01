@@ -1,6 +1,6 @@
 name: iabtcf_consent_info_web
 description: Web implementation of the iabtcf_consent_info plugin.
-version: 2.0.0
+version: 3.0.0
 repository: https://github.com/blaugold/iabtcf_consent_info
 issue_tracker: https://github.com/blaugold/iabtcf_consent_info/issues
 

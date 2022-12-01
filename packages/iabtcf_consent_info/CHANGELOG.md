@@ -1,3 +1,11 @@
+## 3.0.0
+
+> Note: This release has breaking changes.
+
+ - **FEAT**: add `ConsentInfo.purposeConsents|purposeLegitimateInterests`.
+ - **FEAT**: expose `raw` consent info from CMP SDK in `BasicConsentInfo`.
+ - **BREAKING** **FEAT**: rename `ConsentInfo.publisherConsent` to `publisherConsents`.
+
 ## 2.0.0
 
 > Note: This release has breaking changes.
