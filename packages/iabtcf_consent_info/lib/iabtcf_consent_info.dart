@@ -149,6 +149,8 @@ class ConsentInfo extends BasicConsentInfo {
     required int? sdkVersion,
     required int? policyVersion,
     required bool? gdprApplies,
+    required this.purposeConsents,
+    required this.purposeLegitimateInterests,
     required this.publisherConsents,
     required this.publisherLegitimateInterests,
   }) : super(
@@ -158,6 +160,14 @@ class ConsentInfo extends BasicConsentInfo {
           policyVersion: policyVersion,
           gdprApplies: gdprApplies,
         );
+
+  /// The [DataUsagePurpose]s for advertising for which a legal basis of
+  /// consent exists.
+  final List<DataUsagePurpose> purposeConsents;
+
+  /// The [DataUsagePurpose]s for advertising for which a legal basis of
+  /// legitimate interests exists.
+  final List<DataUsagePurpose> purposeLegitimateInterests;
 
   /// The [DataUsagePurpose]s for which the publisher has a legal basis of
   /// consent.
@@ -173,6 +183,11 @@ class ConsentInfo extends BasicConsentInfo {
       other is ConsentInfo &&
           runtimeType == other.runtimeType &&
           super == other &&
+          listEquals(purposeConsents, other.purposeConsents) &&
+          listEquals(
+            purposeLegitimateInterests,
+            other.purposeLegitimateInterests,
+          ) &&
           listEquals(publisherConsents, other.publisherConsents) &&
           listEquals(
             publisherLegitimateInterests,
@@ -182,6 +197,8 @@ class ConsentInfo extends BasicConsentInfo {
   @override
   int get hashCode =>
       super.hashCode ^
+      purposeConsents.hashCode ^
+      purposeLegitimateInterests.hashCode ^
       publisherConsents.hashCode ^
       publisherLegitimateInterests.hashCode;
 
@@ -191,6 +208,8 @@ class ConsentInfo extends BasicConsentInfo {
       'sdkVersion: $sdkVersion, '
       'policyVersion: $policyVersion, '
       'gdprApplies: $gdprApplies, '
+      'purposeConsents: $purposeConsents, '
+      'purposeLegitimateInterests: $purposeLegitimateInterests, '
       'publisherConsents: $publisherConsents, '
       'publisherLegitimateInterests: $publisherLegitimateInterests'
       ')';
@@ -201,6 +220,8 @@ const _cmpSdkIDKey = 'IABTCF_CmpSdkID';
 const _cmpSdkVersionKey = 'IABTCF_CmpSdkVersion';
 const _policyVersionKey = 'IABTCF_PolicyVersion';
 const _gdprAppliesKey = 'IABTCF_gdprApplies';
+const _purposeConsentsKey = 'IABTCF_PurposeConsents';
+const _purposeLegitimateInterestsKey = 'IABTCF_PurposeLegitimateInterests';
 const _publisherConsentKey = 'IABTCF_PublisherConsent';
 const _publisherLegitimateInterestKey = 'IABTCF_PublisherLegitimateInterests';
 
@@ -230,7 +251,7 @@ BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
     );
   }
 
-  List<DataUsagePurpose> parseDataUsagePurpose(Object? info) =>
+  List<DataUsagePurpose> parseDataUsagePurposes(Object? info) =>
       (info as String?)?.let(_parseDataUsagePurposeBinaryString) ?? [];
 
   return ConsentInfo(
@@ -239,9 +260,12 @@ BasicConsentInfo? parseRawConsentInfo(Map<String, dynamic> raw) {
     sdkVersion: sdkVersion,
     policyVersion: policyVersion,
     gdprApplies: true,
-    publisherConsents: parseDataUsagePurpose(raw[_publisherConsentKey]),
+    purposeConsents: parseDataUsagePurposes(raw[_purposeConsentsKey]),
+    purposeLegitimateInterests:
+        parseDataUsagePurposes(raw[_purposeLegitimateInterestsKey]),
+    publisherConsents: parseDataUsagePurposes(raw[_publisherConsentKey]),
     publisherLegitimateInterests:
-        parseDataUsagePurpose(raw[_publisherLegitimateInterestKey]),
+        parseDataUsagePurposes(raw[_publisherLegitimateInterestKey]),
   );
 }
 

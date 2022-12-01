@@ -11,6 +11,8 @@ final testConsentInfo = ConsentInfo(
   sdkVersion: 0,
   policyVersion: 2,
   gdprApplies: true,
+  purposeConsents: testDataUsagePurposes,
+  purposeLegitimateInterests: testDataUsagePurposes,
   publisherConsents: testDataUsagePurposes,
   publisherLegitimateInterests: testDataUsagePurposes,
 );

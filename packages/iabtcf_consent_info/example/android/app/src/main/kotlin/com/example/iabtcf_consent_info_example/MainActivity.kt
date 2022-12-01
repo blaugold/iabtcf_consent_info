@@ -19,6 +19,8 @@ fun SharedPreferences.setupTestConsentInfo() {
         "IABTCF_CmpSdkVersion" to 0,
         "IABTCF_PolicyVersion" to 2,
         "IABTCF_gdprApplies" to 1,
+        "IABTCF_PurposeConsents" to "0101010101",
+        "IABTCF_PurposeLegitimateInterests" to "0101010101",
         "IABTCF_PublisherConsent" to "0101010101",
         "IABTCF_PublisherLegitimateInterests" to "0101010101"
     )
