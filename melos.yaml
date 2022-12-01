@@ -1,23 +1,28 @@
 name: iabtcf_consent_info
 
-dev_dependencies:
-  pedantic: 1.11.0
-
-environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: '>=1.10.0'
-
 packages:
+  - .
   - packages/**
 
+ide:
+  intellij: false
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
 scripts:
-  check_formatting: melos exec -- flutter format --set-exit-if-changed .
+  format:
+    run: flutter format .
+
+  format:check:
+    run: flutter format --set-exit-if-changed .
 
   analyze:
-    run: melos exec -c 1 -- flutter analyze
+    run: flutter analyze
 
   test:
-    run: melos exec -- flutter test --no-pub -r expanded
+    exec: flutter test
     select-package:
       dir-exists:
         - 'test'

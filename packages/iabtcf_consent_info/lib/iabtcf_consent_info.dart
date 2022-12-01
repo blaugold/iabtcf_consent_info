@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:iabtcf_consent_info_platform_interface/iabtcf_consent_info_platform_interface.dart';
-import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// Data usage purpose as defined by the IAB TCF framework.
