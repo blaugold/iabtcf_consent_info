@@ -15,7 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
   meta: ^1.3.0
-  rxdart: ^0.26.0
+  rxdart: '>=0.26.0 <0.28.0'
   iabtcf_consent_info_platform_interface: ^1.0.5
   iabtcf_consent_info_web: ^3.0.0
 dev_dependencies:
