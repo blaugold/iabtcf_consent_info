@@ -12,7 +12,7 @@ scripts:
     run: dart format .
 
   format:check:
-    run: dart format --set-exit-if-changed . --output=show
+    run: dart format --set-exit-if-changed . --output=none
 
   analyze:
     run: flutter analyze
