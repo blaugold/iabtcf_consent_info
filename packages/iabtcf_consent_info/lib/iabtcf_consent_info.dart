@@ -68,6 +68,12 @@ enum DataUsagePurpose {
   /// See:
   /// - [Policy](https://iabeurope.eu/iab-europe-transparency-consent-framework-policies/#Purpose_10__Develop_and_improve_products)
   developAndImproveProducts,
+
+  /// Use limited data to select content
+  ///
+  /// See:
+  /// - [Policy](https://iabeurope.eu/iab-europe-transparency-consent-framework-policies)
+  useLimitedDataToSelectContent,
 }
 
 /// Minimal IAB TCF consent information which is available when a CMP SDK has
