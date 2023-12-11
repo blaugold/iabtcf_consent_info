@@ -9,10 +9,10 @@ ide:
 
 scripts:
   format:
-    run: flutter format .
+    run: dart format .
 
   format:check:
-    run: flutter format --set-exit-if-changed .
+    run: dart format --set-exit-if-changed . --output=show
 
   analyze:
     run: flutter analyze
