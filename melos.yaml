@@ -7,22 +7,18 @@ packages:
 ide:
   intellij: false
 
-command:
-  bootstrap:
-    usePubspecOverrides: true
-
 scripts:
   format:
-    run: flutter format .
+    run: dart format .
 
   format:check:
-    run: flutter format --set-exit-if-changed .
+    run: dart format --set-exit-if-changed . --output=none
 
   analyze:
     run: flutter analyze
 
   test:
     exec: flutter test
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - 'test'

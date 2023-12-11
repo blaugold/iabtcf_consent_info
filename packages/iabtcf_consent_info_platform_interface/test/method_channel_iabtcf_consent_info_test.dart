@@ -11,10 +11,12 @@ void main() {
   final eventChannel = EventChannel(channelName);
   final methodChannel = MethodChannel(channelName);
 
-  test('startSendingUpdates', () async {
+  testWidgets('startSendingUpdates', (tester) async {
     var channelHasStartedListening = false;
-    methodChannel.setMockMethodCallHandler((call) async {
+    tester.binding.defaultBinaryMessenger
+        .setMockMethodCallHandler(methodChannel, (call) async {
       channelHasStartedListening = call.method == 'listen';
+      return null;
     });
 
     final firstEvent =
@@ -24,7 +26,7 @@ void main() {
 
     var firstResult = {'key': 'value'};
 
-    unawaited(eventChannel.binaryMessenger.handlePlatformMessage(
+    unawaited(tester.binding.defaultBinaryMessenger.handlePlatformMessage(
       channelName,
       eventChannel.codec.encodeSuccessEnvelope(firstResult),
       (data) {},

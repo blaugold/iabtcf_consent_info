@@ -1,9 +1,5 @@
 name: CI
 
-env:
-  FLUTTER_VERSION: 3.3.9
-  MELOS_VERSION: 2.8.0
-
 on:
   push:
     branches:
@@ -12,19 +8,16 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-          cache: true
 
       - name: Install Melos
-        run: flutter pub global activate melos $MELOS_VERSION
+        run: flutter pub global activate melos
 
       - name: Bootstrap packages
         run: melos bootstrap
