@@ -7,10 +7,6 @@ packages:
 ide:
   intellij: false
 
-command:
-  bootstrap:
-    usePubspecOverrides: true
-
 scripts:
   format:
     run: flutter format .
@@ -23,6 +19,6 @@ scripts:
 
   test:
     exec: flutter test
-    select-package:
-      dir-exists:
+    packageFilters:
+      dirExists:
         - 'test'
