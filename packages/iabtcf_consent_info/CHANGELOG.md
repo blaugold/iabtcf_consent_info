@@ -1,3 +1,7 @@
+## 3.1.0
+
+ - **FEAT**: add purpose 11: Use limited data to select content (#12).
+
 ## 3.0.0
 
 > Note: This release has breaking changes.
