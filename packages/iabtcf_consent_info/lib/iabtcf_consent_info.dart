@@ -291,10 +291,17 @@ List<int> _parseBinaryString(String string) => string
     .map((it) => it.key)
     .toList();
 
-List<DataUsagePurpose> _parseDataUsagePurposeBinaryString(String string) =>
-    _parseBinaryString(string)
-        .map((it) => DataUsagePurpose.values[it])
-        .toList();
+List<DataUsagePurpose> _parseDataUsagePurposeBinaryString(String string) {
+    final binaryValues = _parseBinaryString(string);
+    final numElements = binaryValues.length < DataUsagePurpose.values.length
+        ? binaryValues.length
+        : DataUsagePurpose.values.length;
+
+    return List.generate(numElements, (index) {
+      final it = binaryValues[index];
+      return DataUsagePurpose.values[it];
+    });
+  }
 
 /// Plugin for reading locally stored IAB TCF consent information, provided by a
 /// CMP SDK.
