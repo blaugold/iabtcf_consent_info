@@ -1,3 +1,7 @@
+## 3.2.0
+
+ - **FEAT**: moderize Android project (#24).
+
 ## 3.1.0
 
  - **FEAT**: add purpose 11: Use limited data to select content (#12).
