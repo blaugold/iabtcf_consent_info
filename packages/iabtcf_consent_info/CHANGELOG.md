@@ -1,3 +1,7 @@
+## 3.3.0
+
+ - **FEAT**: upgrade kotlin to `1.8.22` (#25).
+
 ## 3.2.0
 
  - **FEAT**: moderize Android project (#24).
