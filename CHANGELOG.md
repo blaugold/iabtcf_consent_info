@@ -15,6 +15,27 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`iabtcf_consent_info` - `v3.4.0`](#iabtcf_consent_info---v340)
+
+---
+
+#### `iabtcf_consent_info` - `v3.4.0`
+
+ - **FEAT**: set JVM target to 1.8.
+
+
+## 2024-09-10
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`iabtcf_consent_info` - `v3.3.0`](#iabtcf_consent_info---v330)
 
 ---
