@@ -8,7 +8,7 @@ pluginManagement {
 
 plugins {
     id "com.android.application" version "8.5.2" apply false
-    id "org.jetbrains.kotlin.android" version "1.7.21" apply false
+    id "org.jetbrains.kotlin.android" version "1.8.22" apply false
 }
 
 rootProject.name = 'iabtcf_consent_info'
