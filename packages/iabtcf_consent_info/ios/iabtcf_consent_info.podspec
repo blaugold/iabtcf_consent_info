@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Gabriel Terwesten' => 'gabriel@terwesten.net' }
   s.source           = { :path => '.' }
   s.ios.deployment_target = '9.0'
-  s.source_files     = 'Classes/**/*'
+  s.source_files     = 'iabtcf_consent_info/Sources/iabtcf_consent_info/**/*.swift'
   s.dependency 'Flutter'
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
   s.swift_version    = '5.0'
