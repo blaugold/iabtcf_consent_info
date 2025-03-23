@@ -15,6 +15,25 @@ Packages with breaking changes:
 
 Packages with other changes:
 
+ - [`iabtcf_consent_info` - `v3.4.0+1`](#iabtcf_consent_info---v3401)
+
+---
+
+#### `iabtcf_consent_info` - `v3.4.0+1`
+
+
+## 2025-03-23
+
+### Changes
+
+---
+
+Packages with breaking changes:
+
+ - There are no breaking changes in this release.
+
+Packages with other changes:
+
  - [`iabtcf_consent_info` - `v3.4.0+0`](#iabtcf_consent_info---v3400)
 
 ---
