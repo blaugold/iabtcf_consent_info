@@ -306,10 +306,10 @@ class IabtcfConsentInfo {
   static late final instance = IabtcfConsentInfo._();
 
   // ignore: close_sinks
-  late final _consentInfo = ReplaySubject<BasicConsentInfo?>(
-    maxSize: 1,
-    onListen: _onConsentInfoListen,
-    onCancel: _onConsentInfoCancel,
+  late final _consentInfo = BehaviorSubject<BasicConsentInfo?>(
+      onListen: _onConsentInfoListen,
+      onCancel: _onConsentInfoCancel,
+      sync: true
   );
 
   late StreamSubscription<void> _rawConsentInfoSub;
