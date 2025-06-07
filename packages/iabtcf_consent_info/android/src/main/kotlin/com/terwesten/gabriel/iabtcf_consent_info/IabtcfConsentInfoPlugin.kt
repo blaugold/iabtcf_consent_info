@@ -45,12 +45,11 @@ class IabtcfConsentInfoPlugin : FlutterPlugin, EventChannel.StreamHandler {
     }
 
     private fun sendConsentInfo() {
-        val consentInfo = getConsentInfo()
-
-        if (lastConsentInfoSent == null || consentInfo != lastConsentInfoSent) {
-            lastConsentInfoSent = consentInfo
-            events!!.success(consentInfo)
-        }
+    val consentInfo = getConsentInfo()
+    if (lastConsentInfoSent == null || consentInfo != lastConsentInfoSent) {
+       lastConsentInfoSent = consentInfo
+       events?.success(consentInfo)
+     }
     }
 
     private fun getConsentInfo(): Map<String, Any?> =
