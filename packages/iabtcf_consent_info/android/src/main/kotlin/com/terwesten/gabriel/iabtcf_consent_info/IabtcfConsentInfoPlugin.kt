@@ -49,7 +49,7 @@ class IabtcfConsentInfoPlugin : FlutterPlugin, EventChannel.StreamHandler {
 
         if (lastConsentInfoSent == null || consentInfo != lastConsentInfoSent) {
             lastConsentInfoSent = consentInfo
-            events!!.success(consentInfo)
+            events?.success(consentInfo)
         }
     }
 
